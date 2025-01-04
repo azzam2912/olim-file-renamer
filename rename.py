@@ -5,10 +5,10 @@ import shutil
 from pathlib import Path
 import argparse
 
-class OlympiadRenamer:
+class OlympiadRenamer(tingkatan = ''):
     MIN_YEAR = 2002
     MAX_YEAR = 2024
-    
+
     # Dictionary for type translations
     TYPE_TRANSLATIONS = {
         'kabupaten': 'OSK',
@@ -109,7 +109,7 @@ class OlympiadRenamer:
         filename_lower = filename.lower()
         for alt_name, official_name in self.TYPE_TRANSLATIONS.items():
             if alt_name in filename_lower:
-                return official_name + " SMP"
+                return official_name + tingkatan
         
         return None
 
@@ -223,7 +223,21 @@ def main():
         print(f"Error: Directory '{args.directory}' does not exist")
         return
 
-    renamer = OlympiadRenamer()
+    tingkatan_input = True
+    tingkatan = ""
+    while tingkatan_input:
+        tingkatan = input("Masukkan Tingkatan (SD/SMP/SMA): ")
+
+        if tingkatan not in ["SD", "SMP", "SMA"]:
+            print("Tingkatan yang dimasukkan tidak valid.")
+        else:
+            if tingkatan == "SMA":
+                tingkatan = ""
+            else:
+                tingkatan = " " + tingkatan
+            tingkatan_input = False
+    
+    renamer = OlympiadRenamer(tingkatan)
     success_count = 0
     total_count = 0
 
