@@ -5,7 +5,7 @@ import shutil
 from pathlib import Path
 import argparse
 
-class OlympiadRenamer(tingkatan = ''):
+class OlympiadRenamer:
     MIN_YEAR = 2002
     MAX_YEAR = 2024
 
@@ -72,11 +72,12 @@ class OlympiadRenamer(tingkatan = ''):
         'bagian c': 'Bagian C'
     }
 
-    def __init__(self):
+    def __init__(self, tingkatan):
         self.day_patterns = {
             r'd1|day\s*1|hari\s*1|hari\s*pertama': 'Hari 1',
             r'd2|day\s*2|hari\s*2|hari\s*kedua': 'Hari 2'
         }
+        self.tingkatan = tingkatan
 
     def extract_year(self, filename):
         # Try to find 4-digit year first
@@ -109,7 +110,7 @@ class OlympiadRenamer(tingkatan = ''):
         filename_lower = filename.lower()
         for alt_name, official_name in self.TYPE_TRANSLATIONS.items():
             if alt_name in filename_lower:
-                return official_name + tingkatan
+                return official_name + self.tingkatan
         
         return None
 
