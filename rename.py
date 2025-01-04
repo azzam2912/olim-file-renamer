@@ -6,12 +6,14 @@ from pathlib import Path
 import argparse
 
 class OlympiadRenamer:
-    VALID_TYPES = ['OSK', 'OSP', 'OSN']
     MIN_YEAR = 2002
     MAX_YEAR = 2024
     
     # Dictionary for type translations
     TYPE_TRANSLATIONS = {
+        'kabupaten': 'OSK',
+        'kota': 'OSK',
+        'provinsi': 'OSP',
         'inamo': 'OSN',
         'imo': 'OSN',
         'ino': 'OSN',
@@ -26,7 +28,8 @@ class OlympiadRenamer:
         'osk': 'OSK',
         'osp': 'OSP',
         'osn-k': 'OSK',
-        'osn-p': 'OSP'
+        'osn-p': 'OSP',
+        'nasional': 'OSN'
     }
 
     CONTENT_TRANSLATIONS = {
@@ -40,6 +43,14 @@ class OlympiadRenamer:
         'konsep-matematika': 'konsep-matematika.com',
         'tohir': 'Moh. Tohir',
         'miftah': 'Miftah',
+        'pebrudal': 'Pebrudal Zanu',
+        'anang': 'Anang',
+        'wildan': 'Wildan',
+        'saiful': 'Saiful Arif',
+        'tutur': 'Tutur',
+        'm2suidhat': 'Moh. Tohir',
+        'yoapriyanto': 'Moh. Tohir',
+        'siaposn': 'siap-osn.blogspot.com',
     }
 
     TIPE = {
@@ -51,6 +62,14 @@ class OlympiadRenamer:
         'versi 1': 'Versi 1',
         'versi 2': 'Versi 2',
         'versi 3': 'Versi 3',
+        'isian singkat': 'Isian Singkat',
+        'pilihan ganda': 'Pilihan Ganda',
+        'esai': 'Esai',
+        'essay': 'Esai',
+        'pilgan': 'Pilihan Ganda',
+        'bagian a': 'Bagian A',
+        'bagian b': 'Bagian B',
+        'bagian c': 'Bagian C'
     }
 
     def __init__(self):
@@ -91,12 +110,6 @@ class OlympiadRenamer:
         for alt_name, official_name in self.TYPE_TRANSLATIONS.items():
             if alt_name in filename_lower:
                 return official_name + " SMP"
-
-        # Then check standard types
-        filename = filename.upper()
-        for type_name in self.VALID_TYPES:
-            if type_name in filename:
-                return type_name + " SMP"
         
         return None
 
