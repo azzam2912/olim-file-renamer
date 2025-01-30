@@ -220,15 +220,16 @@ def main():
                       help='Process subdirectories recursively')
     args = parser.parse_args()
 
-    if not os.path.isdir(args.directory):
-        print(f"Error: Directory '{args.directory}' does not exist")
-        return
+    renamed_dir = os.path.join(args.directory, 'renamed')
+    if not os.path.isdir(renamed_dir):
+        os.makedirs(renamed_dir)
+    args.directory = renamed_dir
 
     tingkatan_input = True
     tingkatan = ""
     while tingkatan_input:
         tingkatan = input("Masukkan Tingkatan (SD/SMP/SMA): ")
-
+        tingkatan = tingkatan.upper()
         if tingkatan not in ["SD", "SMP", "SMA"]:
             print("Tingkatan yang dimasukkan tidak valid.")
         else:
